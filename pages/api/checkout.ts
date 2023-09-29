@@ -1,5 +1,5 @@
-import CloudIpsp from 'cloudipsp-node-js-sdk';
 import { NextApiRequest, NextApiResponse } from 'next';
+const CloudIpsp = require('cloudipsp-node-js-sdk');
 
 const fondy = new CloudIpsp({
 	merchantId: 1396424,
