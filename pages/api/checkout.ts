@@ -6,8 +6,8 @@ const fondy = new CloudIpsp({
 	secretKey: 'test',
 });
 
-const successPage = `https://5802-62-122-114-6.ngrok-free.app/success`;
-const server_callback_url = `https://5802-62-122-114-6.ngrok-free.app/api/callback`;
+// const successPage = `https://5802-62-122-114-6.ngrok-free.app/success`;
+// const server_callback_url = `https://5802-62-122-114-6.ngrok-free.app/api/callback`;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	const requestData = {
