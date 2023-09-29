@@ -1,23 +1,19 @@
-const CloudIpsp = require('cloudipsp-node-js-sdk');
+import { NextApiRequest } from 'next';
 
-const fondy = new CloudIpsp({
-	merchantId: 1396424,
-	secretKey: 'test',
-});
+export async function GET(req: NextApiRequest) {
+	const callbackUrl = `http://localhost:3000/api/checkout`;
 
-// const requestData = {
-// 	order_id: 'yryryyr65758940404',
-// 	order_desc: 'test order',
-// 	currency: 'USD',
-// 	amount: '1000',
-// 	response_url: '',
-// 	server_callback_url: '',
-// };
+	try {
+		const res = await fetch(callbackUrl, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+		const data = await res.json();
 
-export async function POST(req: Request) {
-	const requestData = await req.json();
-
-	const data = await fondy.Checkout(requestData);
-
-	return Response.json({ data });
+		return Response.json({ data });
+	} catch (error) {
+		console.error(error);
+		return Response.json({ error: 'Failed to fetch data' });
+	}
 }

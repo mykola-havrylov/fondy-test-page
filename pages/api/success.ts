@@ -6,17 +6,21 @@ const fondy = new CloudIpsp({
 	secretKey: 'test',
 });
 
+const now = new Date();
+const NotNow = new Date();
+NotNow.setHours(NotNow.getHours() - 1);
+
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+	const orderId = req.body;
+	console.log(orderId);
+
 	const requestData = {
-		order_id: req.body.order_id,
-		order_desc: req.body.order_desc,
-		currency: req.body.currency,
-		amount: req.body.amount,
-		response_url: req.body.response_url,
-		server_callback_url: req.body.server_callback_url,
+		date_from: NotNow,
+		date_to: now,
 	};
+
 	fondy
-		.Checkout(requestData)
+		.Reports(requestData)
 		.then((data: any) => {
 			// console.log(data);
 			res.status(200).json(data);

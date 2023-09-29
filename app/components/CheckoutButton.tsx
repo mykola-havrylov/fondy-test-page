@@ -46,7 +46,6 @@ function CheckoutButton() {
 
 	const handleSubmit = async () => {
 		const hostUrl = `${window.location}success`.toString();
-		console.log('hostUrl', hostUrl);
 
 		const requestData = {
 			order_id: uuidv4(),
@@ -56,6 +55,7 @@ function CheckoutButton() {
 			response_url: hostUrl,
 			server_callback_url: '',
 		};
+
 		await fetch('/api/test-api', {
 			method: 'POST',
 			headers: {
@@ -66,6 +66,21 @@ function CheckoutButton() {
 			.then(response => response.json())
 			.then(data => {
 				console.log('data', data.checkout_url);
+
+				if (localStorage.getItem('orderData')) {
+					// Если запись существует, обновляем её с новым order_id
+					localStorage.setItem(
+						'orderData',
+						JSON.stringify({ order_id: requestData.order_id })
+					);
+				} else {
+					// Если записи нет, создаем новую и добавляем в неё order_id
+					localStorage.setItem(
+						'orderData',
+						JSON.stringify({ order_id: requestData.order_id })
+					);
+				}
+
 				window.location.href = data.checkout_url;
 			})
 			.catch(error => console.error(error));
