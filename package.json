@@ -12,6 +12,7 @@
 		"axios": "^1.5.1",
 		"cloudipsp-node-js-sdk": "^1.0.8",
 		"express": "^4.18.2",
+		"firebase": "^10.4.0",
 		"http-proxy-middleware": "^2.0.6",
 		"isomorphic-unfetch": "^4.0.2",
 		"next": "latest",
