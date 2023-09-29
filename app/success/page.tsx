@@ -1,31 +1,33 @@
 'use client';
-import { useEffect, useState } from 'react';
-
-const orderID = 'a997fa1dda384718a399004db12ce08a';
-
-const handleSubmit = async () => {
-	try {
-		const response = await fetch('/api/success', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(orderID),
-		});
-		const data = await response.json();
-		console.log('data', data);
-	} catch (error) {
-		console.error(error);
-	}
-};
+import { useEffect, useRef } from 'react';
 
 export default function Success() {
-	const [hasLoaded, setHasLoaded] = useState(false);
+	const orderID = 'a997fa1dda384718a399004db12ce08a';
+	const effectRan = useRef(false);
 
 	useEffect(() => {
-		if (!hasLoaded) {
+		if (effectRan.current === false) {
+			const handleSubmit = async () => {
+				try {
+					const response = await fetch('/api/callback', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(orderID),
+					});
+					const data = await response.json();
+					console.log('data', data);
+				} catch (error) {
+					console.error(error);
+				}
+			};
+
 			handleSubmit();
-			setHasLoaded(true);
+
+			return () => {
+				effectRan.current = true;
+			};
 		}
 	}, []);
 
