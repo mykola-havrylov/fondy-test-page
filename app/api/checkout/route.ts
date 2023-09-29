@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 const CloudIpsp = require('cloudipsp-node-js-sdk');
 
 const fondy = new CloudIpsp({
