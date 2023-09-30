@@ -56,7 +56,7 @@ function CheckoutButton() {
 			server_callback_url: '',
 		};
 
-		await fetch('/api/test-api', {
+		await fetch('/api/checkout', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -68,13 +68,11 @@ function CheckoutButton() {
 				console.log('data', data.checkout_url);
 
 				if (localStorage.getItem('orderData')) {
-					// Если запись существует, обновляем её с новым order_id
 					localStorage.setItem(
 						'orderData',
 						JSON.stringify({ order_id: requestData.order_id })
 					);
 				} else {
-					// Если записи нет, создаем новую и добавляем в неё order_id
 					localStorage.setItem(
 						'orderData',
 						JSON.stringify({ order_id: requestData.order_id })

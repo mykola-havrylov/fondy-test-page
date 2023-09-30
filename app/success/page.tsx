@@ -1,35 +1,75 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function Success() {
-	const orderID = 'a997fa1dda384718a399004db12ce08a';
 	const effectRan = useRef(false);
+	const updateArray = useRef(false);
+	const [orderArray, setOrderArray] = useState({});
+
+	const searchParams = useSearchParams();
+	const search = searchParams?.get('search');
+
+	console.log('search', search);
 
 	useEffect(() => {
 		if (effectRan.current === false) {
-			const handleSubmit = async () => {
-				try {
-					const response = await fetch('/api/callback', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(orderID),
-					});
-					const data = await response.json();
-					console.log('data', data);
-				} catch (error) {
-					console.error(error);
-				}
-			};
+			if (localStorage.getItem('orderData')) {
+				const orderData = JSON.parse(localStorage.getItem('orderData')!);
 
-			handleSubmit();
+				// const orderID = orderData.order_id;
+
+				console.log('localStorage orderData', orderData);
+
+				const handleSubmit = async () => {
+					try {
+						const response = await fetch('/api/callback', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(orderData),
+						});
+						const data = await response.json();
+						// console.log('data', data, typeof data);
+						setOrderArray(data);
+					} catch (error) {
+						console.error(error);
+					}
+				};
+
+				handleSubmit();
+			}
+
+			// const now = new Date();
+			// const NotNow = new Date();
+			// NotNow.setHours(NotNow.getHours() - 1);
+
+			// const ordersDate = {
+			// 	date_from: NotNow,
+			// 	date_to: now,
+			// };
+
+			// console.log('ordersDate', ordersDate);
 
 			return () => {
 				effectRan.current = true;
 			};
 		}
 	}, []);
+
+	useEffect(() => {
+		if (updateArray.current === false && Object.keys(orderArray).length > 0) {
+			console.log('orderArray', orderArray);
+			localStorage.removeItem('orderData');
+		}
+
+		return () => {
+			if (Object.keys(orderArray).length > 0) {
+				updateArray.current = true;
+			}
+		};
+	}, [orderArray]);
 
 	return (
 		<main className='flex min-h-screen flex-col items-center justify-between p-24'>

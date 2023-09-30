@@ -6,23 +6,27 @@ const fondy = new CloudIpsp({
 	secretKey: 'test',
 });
 
-const now = new Date();
-const NotNow = new Date();
-NotNow.setHours(NotNow.getHours() - 1);
-
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	const orderId = req.body;
-	console.log(orderId);
+	// console.log(ordersDate);
 
-	const requestData = {
-		date_from: NotNow,
-		date_to: now,
+	// fondy
+	// 	.Reports(ordersDate)
+	// 	.then((data: any) => {
+	// 		// console.log(data);
+	// 		res.status(200).json(data);
+	// 	})
+	// 	.catch((error: any) => {
+	// 		res.status(500).json({ error: error.message });
+	// 	});
+
+	const statusData = {
+		order_id: req.body.order_id,
 	};
 
 	fondy
-		.Reports(requestData)
+		.Status(statusData)
 		.then((data: any) => {
-			// console.log(data);
+			console.log(data);
 			res.status(200).json(data);
 		})
 		.catch((error: any) => {
