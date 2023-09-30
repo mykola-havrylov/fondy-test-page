@@ -41,17 +41,6 @@ export default function Success() {
 				handleSubmit();
 			}
 
-			// const now = new Date();
-			// const NotNow = new Date();
-			// NotNow.setHours(NotNow.getHours() - 1);
-
-			// const ordersDate = {
-			// 	date_from: NotNow,
-			// 	date_to: now,
-			// };
-
-			// console.log('ordersDate', ordersDate);
-
 			return () => {
 				effectRan.current = true;
 			};

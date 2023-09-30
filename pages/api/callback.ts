@@ -7,18 +7,6 @@ const fondy = new CloudIpsp({
 });
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	// console.log(ordersDate);
-
-	// fondy
-	// 	.Reports(ordersDate)
-	// 	.then((data: any) => {
-	// 		// console.log(data);
-	// 		res.status(200).json(data);
-	// 	})
-	// 	.catch((error: any) => {
-	// 		res.status(500).json({ error: error.message });
-	// 	});
-
 	const statusData = {
 		order_id: req.body.order_id,
 	};
